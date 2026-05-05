@@ -11,12 +11,16 @@
 #
 # ─── build stage ─────────────────────────────────────────────────────────
 FROM node:22-slim AS build
-RUN corepack enable && apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
+# python3, make, g++ are required by node-gyp to compile better-sqlite3 native binding
+RUN corepack enable && apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 
 # Install deps (cache-friendly: copy only manifests first)
+# PNPM_BUILD_DEPS allows better-sqlite3 to run its build scripts
 COPY package.json pnpm-lock.yaml* ./
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --config.unsafe-perm=true
 
 # Copy sources and build
 COPY . .
@@ -47,13 +51,13 @@ COPY --from=build --chown=workspace:workspace /app/skills ./skills
 
 USER workspace
 ENV NODE_ENV=production \
-    PORT=3000 \
+    PORT=3001 \
     HOST=0.0.0.0 \
-    HERMES_API_URL=http://hermes-agent:8642
+    HERMES_API_URL=http://hermes:8642
 
-EXPOSE 3000
+EXPOSE 3001
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD curl -fsS http://127.0.0.1:3000/ >/dev/null || exit 1
+  CMD curl -fsS http://127.0.0.1:3001/ >/dev/null || exit 1
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["node", "--max-old-space-size=2048", "server-entry.js"]

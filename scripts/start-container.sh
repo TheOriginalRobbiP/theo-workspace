@@ -1,48 +1,58 @@
 #!/bin/bash
-# Container startup wrapper — starts theo-workspace dev server, then hands off to gateway.
-# Lives at /mnt/e/theo-workspace/scripts/start-container.sh
-# Replaces the old rjp-os startup in /opt/data/startup/start.sh
+# Container startup wrapper
+# Starts theo-workspace dev server on :3001, then hands off to gateway
 
-set -euo pipefail
-
-WORK_DIR=/opt/data/work/theo-workspace
-SRC_DIR=/mnt/e/theo-workspace
+WORK=/opt/data/work/theo-workspace
+SRC=/mnt/e/theo-workspace
 LOG=/opt/data/work/theo-workspace.log
 
-echo "[startup] Syncing theo-workspace source from /mnt/e..."
-mkdir -p "$WORK_DIR"
-
-# Copy src + config files from the Windows mount (fast, just metadata diff)
-cp -ru "$SRC_DIR/src" "$WORK_DIR/"
-cp -f  "$SRC_DIR/package.json" "$WORK_DIR/"
-cp -f  "$SRC_DIR/pnpm-lock.yaml" "$WORK_DIR/"
-cp -f  "$SRC_DIR/vite.config.ts" "$WORK_DIR/"
-cp -f  "$SRC_DIR/tsconfig.json" "$WORK_DIR/"
-cp -f  "$SRC_DIR/server-entry.js" "$WORK_DIR/" 2>/dev/null || true
-cp -f  "$SRC_DIR/.env" "$WORK_DIR/" 2>/dev/null || true
-cp -ru "$SRC_DIR/assets" "$WORK_DIR/" 2>/dev/null || true
-cp -ru "$SRC_DIR/public" "$WORK_DIR/" 2>/dev/null || true
-cp -ru "$SRC_DIR/skills" "$WORK_DIR/" 2>/dev/null || true
-
-echo "[startup] Source synced."
-
-# Install/update deps only if node_modules is missing or package.json changed
-if [ ! -d "$WORK_DIR/node_modules" ]; then
-    echo "[startup] Installing deps (first run)..."
-    cd "$WORK_DIR" && pnpm install --reporter=silent
-    echo "[startup] Deps installed."
+# ── Sync latest source from Windows mount ────────────────────────────────────
+if [ -d "$SRC" ]; then
+  echo "[startup] Syncing theo-workspace source..."
+  for item in src package.json vite.config.ts tsconfig.json server-entry.js assets public skills .env; do
+    [ -e "$SRC/$item" ] && cp -r "$SRC/$item" "$WORK/" 2>/dev/null || true
+  done
+  echo "[startup] Source synced."
 fi
 
-# Kill any previous instance
+# ── Kill any previous instance ───────────────────────────────────────────────
 pkill -f "vite.*3001" 2>/dev/null || true
+pkill -f "next dev" 2>/dev/null || true
 sleep 1
 
+# ── Start theo-workspace ──────────────────────────────────────────────────────
 echo "[startup] Starting theo-workspace on :3001..."
-cd "$WORK_DIR"
-NODE_OPTIONS="--max-old-space-size=2048" \
-  nohup pnpm exec vite dev --port 3001 --host 0.0.0.0 >> "$LOG" 2>&1 &
+cd "$WORK"
 
+# Connect to the local hermes gateway and dashboard directly (same container)
+export HERMES_API_URL=http://127.0.0.1:8642
+export HERMES_DASHBOARD_URL=http://hermes-dashboard:9119
+export HERMES_API_TOKEN=sk-hermes-PM6dYNXILTg-GGPFt5j8XwNNBr16mIC4
+export AGENCY_DB_PATH=/opt/data/rjp-os.db
+export KANBAN_DB_PATH=/opt/data/kanban.db
+export HERMES_PROFILES_DIR=/opt/data/profiles
+export PORT=3001
+export HOST=0.0.0.0
+export HERMES_ALLOW_INSECURE_REMOTE=1
+export COOKIE_SECURE=0
+export NODE_ENV=development
+export CLAUDE_DEFAULT_MODEL=hermes-agent
+
+# Scrape fresh dashboard session token (regenerated on every container start)
+echo "[startup] Fetching dashboard token..."
+for i in $(seq 1 10); do
+  DASH_TOKEN=$(curl -sf http://hermes-dashboard:9119/login 2>/dev/null | grep -o '__HERMES_SESSION_TOKEN__="[^"]*"' | grep -o '"[^"]*"$' | tr -d '"')
+  if [ -n "$DASH_TOKEN" ]; then
+    export CLAUDE_DASHBOARD_TOKEN="$DASH_TOKEN"
+    echo "[startup] Dashboard token acquired."
+    break
+  fi
+  sleep 2
+done
+[ -z "$CLAUDE_DASHBOARD_TOKEN" ] && echo "[startup] Warning: could not get dashboard token, enhanced features may be limited."
+
+nohup node_modules/.bin/vite dev --port 3001 --host 0.0.0.0 >> "$LOG" 2>&1 &
 echo "[startup] theo-workspace started (pid $!), log: $LOG"
 
-# Hand off to the real gateway entrypoint
+# ── Hand off to gateway ───────────────────────────────────────────────────────
 exec /opt/hermes/.venv/bin/hermes "$@"

@@ -17,6 +17,7 @@ import { OperationsNewAgentModal } from './components/operations-new-agent-modal
 import { OperationsSettingsModal } from './components/operations-settings-modal'
 import { FullOutputsView } from './components/full-outputs-view'
 import { useOperations } from './hooks/use-operations'
+import { SoulProfilesSection } from './components/soul-profiles-section'
 
 export const THEME_STYLE: CSSProperties = {
   ['--theme-bg' as string]: 'var(--color-surface)',
@@ -190,6 +191,8 @@ export function OperationsScreen() {
                 <span className="mt-3 text-sm text-[var(--theme-muted)]">Add Agent</span>
               </motion.button>
             </section>
+
+            <SoulProfilesSection />
 
             <section className="rounded-3xl border border-[var(--theme-border)] bg-[var(--theme-card)] p-5 shadow-[0_24px_80px_var(--theme-shadow)]">
               <div className="flex items-center justify-between gap-3">

@@ -72,10 +72,17 @@ export const MOBILE_HAMBURGER_NAV_ITEMS = [
   },
   {
     id: 'operations',
-    label: 'Operations',
+    label: 'Agents',
     icon: UserMultipleIcon,
     to: '/operations',
     match: (p: string) => p.startsWith('/operations'),
+  },
+  {
+    id: 'agency',
+    label: 'Agency',
+    icon: Building01Icon,
+    to: '/agency/',
+    match: (p: string) => p.startsWith('/agency'),
   },
   {
     id: 'swarm',

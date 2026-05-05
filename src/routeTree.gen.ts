@@ -29,6 +29,7 @@ import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as ChatIndexRouteImport } from './routes/chat/index'
+import { Route as AgencyIndexRouteImport } from './routes/agency/index'
 import { Route as SettingsProvidersRouteImport } from './routes/settings/providers'
 import { Route as ChatSessionKeyRouteImport } from './routes/chat/$sessionKey'
 import { Route as ApiWorkspaceRouteImport } from './routes/api/workspace'
@@ -78,6 +79,7 @@ import { Route as ApiLocalProvidersRouteImport } from './routes/api/local-provid
 import { Route as ApiIntegrationsRouteImport } from './routes/api/integrations'
 import { Route as ApiHistoryRouteImport } from './routes/api/history'
 import { Route as ApiGatewayStatusRouteImport } from './routes/api/gateway-status'
+import { Route as ApiGatewayReprobeRouteImport } from './routes/api/gateway-reprobe'
 import { Route as ApiFilesRouteImport } from './routes/api/files'
 import { Route as ApiEventsRouteImport } from './routes/api/events'
 import { Route as ApiCrewStatusRouteImport } from './routes/api/crew-status'
@@ -95,6 +97,10 @@ import { Route as ApiChatEventsRouteImport } from './routes/api/chat-events'
 import { Route as ApiAuthCheckRouteImport } from './routes/api/auth-check'
 import { Route as ApiAuthRouteImport } from './routes/api/auth'
 import { Route as ApiArtifactsRouteImport } from './routes/api/artifacts'
+import { Route as AgencyProjectsRouteImport } from './routes/agency/projects'
+import { Route as AgencyCostRouteImport } from './routes/agency/cost'
+import { Route as AgencyClientsRouteImport } from './routes/agency/clients'
+import { Route as AgencyBoardRouteImport } from './routes/agency/board'
 import { Route as ApiUpdateWorkspaceRouteImport } from './routes/api/update/workspace'
 import { Route as ApiUpdateStatusRouteImport } from './routes/api/update/status'
 import { Route as ApiUpdateAgentRouteImport } from './routes/api/update/agent'
@@ -136,10 +142,23 @@ import { Route as ApiClaudeTasksTaskIdRouteImport } from './routes/api/claude-ta
 import { Route as ApiClaudeProxySplatRouteImport } from './routes/api/claude-proxy/$'
 import { Route as ApiClaudeJobsJobIdRouteImport } from './routes/api/claude-jobs.$jobId'
 import { Route as ApiArtifactsArtifactIdRouteImport } from './routes/api/artifacts.$artifactId'
+import { Route as ApiAgencySoulRouteImport } from './routes/api/agency/soul'
+import { Route as ApiAgencyProjectsRouteImport } from './routes/api/agency/projects'
+import { Route as ApiAgencyDashboardRouteImport } from './routes/api/agency/dashboard'
+import { Route as ApiAgencyCostRouteImport } from './routes/api/agency/cost'
+import { Route as ApiAgencyClientsRouteImport } from './routes/api/agency/clients'
+import { Route as ApiAgencyAgentsRouteImport } from './routes/api/agency/agents'
+import { Route as AgencyProjectsIdRouteImport } from './routes/agency/projects.$id'
+import { Route as AgencyClientsIdRouteImport } from './routes/agency/clients.$id'
 import { Route as ApiSessionsSessionKeyStatusRouteImport } from './routes/api/sessions/$sessionKey.status'
 import { Route as ApiSessionsSessionKeyActiveRunRouteImport } from './routes/api/sessions/$sessionKey.active-run'
 import { Route as ApiMcpHubSourcesIdRouteImport } from './routes/api/mcp/hub-sources.$id'
 import { Route as ApiMcpNameLogsRouteImport } from './routes/api/mcp/$name.logs'
+import { Route as ApiAgencySoulProfileRouteImport } from './routes/api/agency/soul.$profile'
+import { Route as ApiAgencyProjectsIdRouteImport } from './routes/api/agency/projects.$id'
+import { Route as ApiAgencyClientsIdRouteImport } from './routes/api/agency/clients.$id'
+import { Route as ApiAgencyProjectsIdSectionsRouteImport } from './routes/api/agency/projects.$id.sections'
+import { Route as ApiAgencyProjectsIdKanbanSyncRouteImport } from './routes/api/agency/projects.$id.kanban-sync'
 
 const TerminalRoute = TerminalRouteImport.update({
   id: '/terminal',
@@ -239,6 +258,11 @@ const SettingsIndexRoute = SettingsIndexRouteImport.update({
 const ChatIndexRoute = ChatIndexRouteImport.update({
   id: '/chat/',
   path: '/chat/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyIndexRoute = AgencyIndexRouteImport.update({
+  id: '/agency/',
+  path: '/agency/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsProvidersRoute = SettingsProvidersRouteImport.update({
@@ -487,6 +511,11 @@ const ApiGatewayStatusRoute = ApiGatewayStatusRouteImport.update({
   path: '/api/gateway-status',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGatewayReprobeRoute = ApiGatewayReprobeRouteImport.update({
+  id: '/api/gateway-reprobe',
+  path: '/api/gateway-reprobe',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiFilesRoute = ApiFilesRouteImport.update({
   id: '/api/files',
   path: '/api/files',
@@ -570,6 +599,26 @@ const ApiAuthRoute = ApiAuthRouteImport.update({
 const ApiArtifactsRoute = ApiArtifactsRouteImport.update({
   id: '/api/artifacts',
   path: '/api/artifacts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyProjectsRoute = AgencyProjectsRouteImport.update({
+  id: '/agency/projects',
+  path: '/agency/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyCostRoute = AgencyCostRouteImport.update({
+  id: '/agency/cost',
+  path: '/agency/cost',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyClientsRoute = AgencyClientsRouteImport.update({
+  id: '/agency/clients',
+  path: '/agency/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyBoardRoute = AgencyBoardRouteImport.update({
+  id: '/agency/board',
+  path: '/agency/board',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiUpdateWorkspaceRoute = ApiUpdateWorkspaceRouteImport.update({
@@ -777,6 +826,46 @@ const ApiArtifactsArtifactIdRoute = ApiArtifactsArtifactIdRouteImport.update({
   path: '/$artifactId',
   getParentRoute: () => ApiArtifactsRoute,
 } as any)
+const ApiAgencySoulRoute = ApiAgencySoulRouteImport.update({
+  id: '/api/agency/soul',
+  path: '/api/agency/soul',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgencyProjectsRoute = ApiAgencyProjectsRouteImport.update({
+  id: '/api/agency/projects',
+  path: '/api/agency/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgencyDashboardRoute = ApiAgencyDashboardRouteImport.update({
+  id: '/api/agency/dashboard',
+  path: '/api/agency/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgencyCostRoute = ApiAgencyCostRouteImport.update({
+  id: '/api/agency/cost',
+  path: '/api/agency/cost',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgencyClientsRoute = ApiAgencyClientsRouteImport.update({
+  id: '/api/agency/clients',
+  path: '/api/agency/clients',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAgencyAgentsRoute = ApiAgencyAgentsRouteImport.update({
+  id: '/api/agency/agents',
+  path: '/api/agency/agents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgencyProjectsIdRoute = AgencyProjectsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AgencyProjectsRoute,
+} as any)
+const AgencyClientsIdRoute = AgencyClientsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AgencyClientsRoute,
+} as any)
 const ApiSessionsSessionKeyStatusRoute =
   ApiSessionsSessionKeyStatusRouteImport.update({
     id: '/$sessionKey/status',
@@ -799,6 +888,33 @@ const ApiMcpNameLogsRoute = ApiMcpNameLogsRouteImport.update({
   path: '/logs',
   getParentRoute: () => ApiMcpNameRoute,
 } as any)
+const ApiAgencySoulProfileRoute = ApiAgencySoulProfileRouteImport.update({
+  id: '/$profile',
+  path: '/$profile',
+  getParentRoute: () => ApiAgencySoulRoute,
+} as any)
+const ApiAgencyProjectsIdRoute = ApiAgencyProjectsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiAgencyProjectsRoute,
+} as any)
+const ApiAgencyClientsIdRoute = ApiAgencyClientsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ApiAgencyClientsRoute,
+} as any)
+const ApiAgencyProjectsIdSectionsRoute =
+  ApiAgencyProjectsIdSectionsRouteImport.update({
+    id: '/sections',
+    path: '/sections',
+    getParentRoute: () => ApiAgencyProjectsIdRoute,
+  } as any)
+const ApiAgencyProjectsIdKanbanSyncRoute =
+  ApiAgencyProjectsIdKanbanSyncRouteImport.update({
+    id: '/kanban-sync',
+    path: '/kanban-sync',
+    getParentRoute: () => ApiAgencyProjectsIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -819,6 +935,10 @@ export interface FileRoutesByFullPath {
   '/swarm2': typeof Swarm2Route
   '/tasks': typeof TasksRoute
   '/terminal': typeof TerminalRoute
+  '/agency/board': typeof AgencyBoardRoute
+  '/agency/clients': typeof AgencyClientsRouteWithChildren
+  '/agency/cost': typeof AgencyCostRoute
+  '/agency/projects': typeof AgencyProjectsRouteWithChildren
   '/api/artifacts': typeof ApiArtifactsRouteWithChildren
   '/api/auth': typeof ApiAuthRoute
   '/api/auth-check': typeof ApiAuthCheckRoute
@@ -836,6 +956,7 @@ export interface FileRoutesByFullPath {
   '/api/crew-status': typeof ApiCrewStatusRoute
   '/api/events': typeof ApiEventsRoute
   '/api/files': typeof ApiFilesRoute
+  '/api/gateway-reprobe': typeof ApiGatewayReprobeRoute
   '/api/gateway-status': typeof ApiGatewayStatusRoute
   '/api/history': typeof ApiHistoryRoute
   '/api/integrations': typeof ApiIntegrationsRoute
@@ -885,8 +1006,17 @@ export interface FileRoutesByFullPath {
   '/api/workspace': typeof ApiWorkspaceRoute
   '/chat/$sessionKey': typeof ChatSessionKeyRoute
   '/settings/providers': typeof SettingsProvidersRoute
+  '/agency/': typeof AgencyIndexRoute
   '/chat/': typeof ChatIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/agency/clients/$id': typeof AgencyClientsIdRoute
+  '/agency/projects/$id': typeof AgencyProjectsIdRoute
+  '/api/agency/agents': typeof ApiAgencyAgentsRoute
+  '/api/agency/clients': typeof ApiAgencyClientsRouteWithChildren
+  '/api/agency/cost': typeof ApiAgencyCostRoute
+  '/api/agency/dashboard': typeof ApiAgencyDashboardRoute
+  '/api/agency/projects': typeof ApiAgencyProjectsRouteWithChildren
+  '/api/agency/soul': typeof ApiAgencySoulRouteWithChildren
   '/api/artifacts/$artifactId': typeof ApiArtifactsArtifactIdRoute
   '/api/claude-jobs/$jobId': typeof ApiClaudeJobsJobIdRoute
   '/api/claude-proxy/$': typeof ApiClaudeProxySplatRoute
@@ -928,10 +1058,15 @@ export interface FileRoutesByFullPath {
   '/api/update/agent': typeof ApiUpdateAgentRoute
   '/api/update/status': typeof ApiUpdateStatusRoute
   '/api/update/workspace': typeof ApiUpdateWorkspaceRoute
+  '/api/agency/clients/$id': typeof ApiAgencyClientsIdRoute
+  '/api/agency/projects/$id': typeof ApiAgencyProjectsIdRouteWithChildren
+  '/api/agency/soul/$profile': typeof ApiAgencySoulProfileRoute
   '/api/mcp/$name/logs': typeof ApiMcpNameLogsRoute
   '/api/mcp/hub-sources/$id': typeof ApiMcpHubSourcesIdRoute
   '/api/sessions/$sessionKey/active-run': typeof ApiSessionsSessionKeyActiveRunRoute
   '/api/sessions/$sessionKey/status': typeof ApiSessionsSessionKeyStatusRoute
+  '/api/agency/projects/$id/kanban-sync': typeof ApiAgencyProjectsIdKanbanSyncRoute
+  '/api/agency/projects/$id/sections': typeof ApiAgencyProjectsIdSectionsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -951,6 +1086,10 @@ export interface FileRoutesByTo {
   '/swarm2': typeof Swarm2Route
   '/tasks': typeof TasksRoute
   '/terminal': typeof TerminalRoute
+  '/agency/board': typeof AgencyBoardRoute
+  '/agency/clients': typeof AgencyClientsRouteWithChildren
+  '/agency/cost': typeof AgencyCostRoute
+  '/agency/projects': typeof AgencyProjectsRouteWithChildren
   '/api/artifacts': typeof ApiArtifactsRouteWithChildren
   '/api/auth': typeof ApiAuthRoute
   '/api/auth-check': typeof ApiAuthCheckRoute
@@ -968,6 +1107,7 @@ export interface FileRoutesByTo {
   '/api/crew-status': typeof ApiCrewStatusRoute
   '/api/events': typeof ApiEventsRoute
   '/api/files': typeof ApiFilesRoute
+  '/api/gateway-reprobe': typeof ApiGatewayReprobeRoute
   '/api/gateway-status': typeof ApiGatewayStatusRoute
   '/api/history': typeof ApiHistoryRoute
   '/api/integrations': typeof ApiIntegrationsRoute
@@ -1017,8 +1157,17 @@ export interface FileRoutesByTo {
   '/api/workspace': typeof ApiWorkspaceRoute
   '/chat/$sessionKey': typeof ChatSessionKeyRoute
   '/settings/providers': typeof SettingsProvidersRoute
+  '/agency': typeof AgencyIndexRoute
   '/chat': typeof ChatIndexRoute
   '/settings': typeof SettingsIndexRoute
+  '/agency/clients/$id': typeof AgencyClientsIdRoute
+  '/agency/projects/$id': typeof AgencyProjectsIdRoute
+  '/api/agency/agents': typeof ApiAgencyAgentsRoute
+  '/api/agency/clients': typeof ApiAgencyClientsRouteWithChildren
+  '/api/agency/cost': typeof ApiAgencyCostRoute
+  '/api/agency/dashboard': typeof ApiAgencyDashboardRoute
+  '/api/agency/projects': typeof ApiAgencyProjectsRouteWithChildren
+  '/api/agency/soul': typeof ApiAgencySoulRouteWithChildren
   '/api/artifacts/$artifactId': typeof ApiArtifactsArtifactIdRoute
   '/api/claude-jobs/$jobId': typeof ApiClaudeJobsJobIdRoute
   '/api/claude-proxy/$': typeof ApiClaudeProxySplatRoute
@@ -1060,10 +1209,15 @@ export interface FileRoutesByTo {
   '/api/update/agent': typeof ApiUpdateAgentRoute
   '/api/update/status': typeof ApiUpdateStatusRoute
   '/api/update/workspace': typeof ApiUpdateWorkspaceRoute
+  '/api/agency/clients/$id': typeof ApiAgencyClientsIdRoute
+  '/api/agency/projects/$id': typeof ApiAgencyProjectsIdRouteWithChildren
+  '/api/agency/soul/$profile': typeof ApiAgencySoulProfileRoute
   '/api/mcp/$name/logs': typeof ApiMcpNameLogsRoute
   '/api/mcp/hub-sources/$id': typeof ApiMcpHubSourcesIdRoute
   '/api/sessions/$sessionKey/active-run': typeof ApiSessionsSessionKeyActiveRunRoute
   '/api/sessions/$sessionKey/status': typeof ApiSessionsSessionKeyStatusRoute
+  '/api/agency/projects/$id/kanban-sync': typeof ApiAgencyProjectsIdKanbanSyncRoute
+  '/api/agency/projects/$id/sections': typeof ApiAgencyProjectsIdSectionsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -1085,6 +1239,10 @@ export interface FileRoutesById {
   '/swarm2': typeof Swarm2Route
   '/tasks': typeof TasksRoute
   '/terminal': typeof TerminalRoute
+  '/agency/board': typeof AgencyBoardRoute
+  '/agency/clients': typeof AgencyClientsRouteWithChildren
+  '/agency/cost': typeof AgencyCostRoute
+  '/agency/projects': typeof AgencyProjectsRouteWithChildren
   '/api/artifacts': typeof ApiArtifactsRouteWithChildren
   '/api/auth': typeof ApiAuthRoute
   '/api/auth-check': typeof ApiAuthCheckRoute
@@ -1102,6 +1260,7 @@ export interface FileRoutesById {
   '/api/crew-status': typeof ApiCrewStatusRoute
   '/api/events': typeof ApiEventsRoute
   '/api/files': typeof ApiFilesRoute
+  '/api/gateway-reprobe': typeof ApiGatewayReprobeRoute
   '/api/gateway-status': typeof ApiGatewayStatusRoute
   '/api/history': typeof ApiHistoryRoute
   '/api/integrations': typeof ApiIntegrationsRoute
@@ -1151,8 +1310,17 @@ export interface FileRoutesById {
   '/api/workspace': typeof ApiWorkspaceRoute
   '/chat/$sessionKey': typeof ChatSessionKeyRoute
   '/settings/providers': typeof SettingsProvidersRoute
+  '/agency/': typeof AgencyIndexRoute
   '/chat/': typeof ChatIndexRoute
   '/settings/': typeof SettingsIndexRoute
+  '/agency/clients/$id': typeof AgencyClientsIdRoute
+  '/agency/projects/$id': typeof AgencyProjectsIdRoute
+  '/api/agency/agents': typeof ApiAgencyAgentsRoute
+  '/api/agency/clients': typeof ApiAgencyClientsRouteWithChildren
+  '/api/agency/cost': typeof ApiAgencyCostRoute
+  '/api/agency/dashboard': typeof ApiAgencyDashboardRoute
+  '/api/agency/projects': typeof ApiAgencyProjectsRouteWithChildren
+  '/api/agency/soul': typeof ApiAgencySoulRouteWithChildren
   '/api/artifacts/$artifactId': typeof ApiArtifactsArtifactIdRoute
   '/api/claude-jobs/$jobId': typeof ApiClaudeJobsJobIdRoute
   '/api/claude-proxy/$': typeof ApiClaudeProxySplatRoute
@@ -1194,10 +1362,15 @@ export interface FileRoutesById {
   '/api/update/agent': typeof ApiUpdateAgentRoute
   '/api/update/status': typeof ApiUpdateStatusRoute
   '/api/update/workspace': typeof ApiUpdateWorkspaceRoute
+  '/api/agency/clients/$id': typeof ApiAgencyClientsIdRoute
+  '/api/agency/projects/$id': typeof ApiAgencyProjectsIdRouteWithChildren
+  '/api/agency/soul/$profile': typeof ApiAgencySoulProfileRoute
   '/api/mcp/$name/logs': typeof ApiMcpNameLogsRoute
   '/api/mcp/hub-sources/$id': typeof ApiMcpHubSourcesIdRoute
   '/api/sessions/$sessionKey/active-run': typeof ApiSessionsSessionKeyActiveRunRoute
   '/api/sessions/$sessionKey/status': typeof ApiSessionsSessionKeyStatusRoute
+  '/api/agency/projects/$id/kanban-sync': typeof ApiAgencyProjectsIdKanbanSyncRoute
+  '/api/agency/projects/$id/sections': typeof ApiAgencyProjectsIdSectionsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -1220,6 +1393,10 @@ export interface FileRouteTypes {
     | '/swarm2'
     | '/tasks'
     | '/terminal'
+    | '/agency/board'
+    | '/agency/clients'
+    | '/agency/cost'
+    | '/agency/projects'
     | '/api/artifacts'
     | '/api/auth'
     | '/api/auth-check'
@@ -1237,6 +1414,7 @@ export interface FileRouteTypes {
     | '/api/crew-status'
     | '/api/events'
     | '/api/files'
+    | '/api/gateway-reprobe'
     | '/api/gateway-status'
     | '/api/history'
     | '/api/integrations'
@@ -1286,8 +1464,17 @@ export interface FileRouteTypes {
     | '/api/workspace'
     | '/chat/$sessionKey'
     | '/settings/providers'
+    | '/agency/'
     | '/chat/'
     | '/settings/'
+    | '/agency/clients/$id'
+    | '/agency/projects/$id'
+    | '/api/agency/agents'
+    | '/api/agency/clients'
+    | '/api/agency/cost'
+    | '/api/agency/dashboard'
+    | '/api/agency/projects'
+    | '/api/agency/soul'
     | '/api/artifacts/$artifactId'
     | '/api/claude-jobs/$jobId'
     | '/api/claude-proxy/$'
@@ -1329,10 +1516,15 @@ export interface FileRouteTypes {
     | '/api/update/agent'
     | '/api/update/status'
     | '/api/update/workspace'
+    | '/api/agency/clients/$id'
+    | '/api/agency/projects/$id'
+    | '/api/agency/soul/$profile'
     | '/api/mcp/$name/logs'
     | '/api/mcp/hub-sources/$id'
     | '/api/sessions/$sessionKey/active-run'
     | '/api/sessions/$sessionKey/status'
+    | '/api/agency/projects/$id/kanban-sync'
+    | '/api/agency/projects/$id/sections'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -1352,6 +1544,10 @@ export interface FileRouteTypes {
     | '/swarm2'
     | '/tasks'
     | '/terminal'
+    | '/agency/board'
+    | '/agency/clients'
+    | '/agency/cost'
+    | '/agency/projects'
     | '/api/artifacts'
     | '/api/auth'
     | '/api/auth-check'
@@ -1369,6 +1565,7 @@ export interface FileRouteTypes {
     | '/api/crew-status'
     | '/api/events'
     | '/api/files'
+    | '/api/gateway-reprobe'
     | '/api/gateway-status'
     | '/api/history'
     | '/api/integrations'
@@ -1418,8 +1615,17 @@ export interface FileRouteTypes {
     | '/api/workspace'
     | '/chat/$sessionKey'
     | '/settings/providers'
+    | '/agency'
     | '/chat'
     | '/settings'
+    | '/agency/clients/$id'
+    | '/agency/projects/$id'
+    | '/api/agency/agents'
+    | '/api/agency/clients'
+    | '/api/agency/cost'
+    | '/api/agency/dashboard'
+    | '/api/agency/projects'
+    | '/api/agency/soul'
     | '/api/artifacts/$artifactId'
     | '/api/claude-jobs/$jobId'
     | '/api/claude-proxy/$'
@@ -1461,10 +1667,15 @@ export interface FileRouteTypes {
     | '/api/update/agent'
     | '/api/update/status'
     | '/api/update/workspace'
+    | '/api/agency/clients/$id'
+    | '/api/agency/projects/$id'
+    | '/api/agency/soul/$profile'
     | '/api/mcp/$name/logs'
     | '/api/mcp/hub-sources/$id'
     | '/api/sessions/$sessionKey/active-run'
     | '/api/sessions/$sessionKey/status'
+    | '/api/agency/projects/$id/kanban-sync'
+    | '/api/agency/projects/$id/sections'
   id:
     | '__root__'
     | '/'
@@ -1485,6 +1696,10 @@ export interface FileRouteTypes {
     | '/swarm2'
     | '/tasks'
     | '/terminal'
+    | '/agency/board'
+    | '/agency/clients'
+    | '/agency/cost'
+    | '/agency/projects'
     | '/api/artifacts'
     | '/api/auth'
     | '/api/auth-check'
@@ -1502,6 +1717,7 @@ export interface FileRouteTypes {
     | '/api/crew-status'
     | '/api/events'
     | '/api/files'
+    | '/api/gateway-reprobe'
     | '/api/gateway-status'
     | '/api/history'
     | '/api/integrations'
@@ -1551,8 +1767,17 @@ export interface FileRouteTypes {
     | '/api/workspace'
     | '/chat/$sessionKey'
     | '/settings/providers'
+    | '/agency/'
     | '/chat/'
     | '/settings/'
+    | '/agency/clients/$id'
+    | '/agency/projects/$id'
+    | '/api/agency/agents'
+    | '/api/agency/clients'
+    | '/api/agency/cost'
+    | '/api/agency/dashboard'
+    | '/api/agency/projects'
+    | '/api/agency/soul'
     | '/api/artifacts/$artifactId'
     | '/api/claude-jobs/$jobId'
     | '/api/claude-proxy/$'
@@ -1594,10 +1819,15 @@ export interface FileRouteTypes {
     | '/api/update/agent'
     | '/api/update/status'
     | '/api/update/workspace'
+    | '/api/agency/clients/$id'
+    | '/api/agency/projects/$id'
+    | '/api/agency/soul/$profile'
     | '/api/mcp/$name/logs'
     | '/api/mcp/hub-sources/$id'
     | '/api/sessions/$sessionKey/active-run'
     | '/api/sessions/$sessionKey/status'
+    | '/api/agency/projects/$id/kanban-sync'
+    | '/api/agency/projects/$id/sections'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1619,6 +1849,10 @@ export interface RootRouteChildren {
   Swarm2Route: typeof Swarm2Route
   TasksRoute: typeof TasksRoute
   TerminalRoute: typeof TerminalRoute
+  AgencyBoardRoute: typeof AgencyBoardRoute
+  AgencyClientsRoute: typeof AgencyClientsRouteWithChildren
+  AgencyCostRoute: typeof AgencyCostRoute
+  AgencyProjectsRoute: typeof AgencyProjectsRouteWithChildren
   ApiArtifactsRoute: typeof ApiArtifactsRouteWithChildren
   ApiAuthRoute: typeof ApiAuthRoute
   ApiAuthCheckRoute: typeof ApiAuthCheckRoute
@@ -1636,6 +1870,7 @@ export interface RootRouteChildren {
   ApiCrewStatusRoute: typeof ApiCrewStatusRoute
   ApiEventsRoute: typeof ApiEventsRoute
   ApiFilesRoute: typeof ApiFilesRoute
+  ApiGatewayReprobeRoute: typeof ApiGatewayReprobeRoute
   ApiGatewayStatusRoute: typeof ApiGatewayStatusRoute
   ApiHistoryRoute: typeof ApiHistoryRoute
   ApiIntegrationsRoute: typeof ApiIntegrationsRoute
@@ -1684,7 +1919,14 @@ export interface RootRouteChildren {
   ApiTerminalStreamRoute: typeof ApiTerminalStreamRoute
   ApiWorkspaceRoute: typeof ApiWorkspaceRoute
   ChatSessionKeyRoute: typeof ChatSessionKeyRoute
+  AgencyIndexRoute: typeof AgencyIndexRoute
   ChatIndexRoute: typeof ChatIndexRoute
+  ApiAgencyAgentsRoute: typeof ApiAgencyAgentsRoute
+  ApiAgencyClientsRoute: typeof ApiAgencyClientsRouteWithChildren
+  ApiAgencyCostRoute: typeof ApiAgencyCostRoute
+  ApiAgencyDashboardRoute: typeof ApiAgencyDashboardRoute
+  ApiAgencyProjectsRoute: typeof ApiAgencyProjectsRouteWithChildren
+  ApiAgencySoulRoute: typeof ApiAgencySoulRouteWithChildren
   ApiClaudeProxySplatRoute: typeof ApiClaudeProxySplatRoute
   ApiDashboardOverviewRoute: typeof ApiDashboardOverviewRoute
   ApiKnowledgeConfigRoute: typeof ApiKnowledgeConfigRoute
@@ -1848,6 +2090,13 @@ declare module '@tanstack/react-router' {
       path: '/chat'
       fullPath: '/chat/'
       preLoaderRoute: typeof ChatIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/': {
+      id: '/agency/'
+      path: '/agency'
+      fullPath: '/agency/'
+      preLoaderRoute: typeof AgencyIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings/providers': {
@@ -2193,6 +2442,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGatewayStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/gateway-reprobe': {
+      id: '/api/gateway-reprobe'
+      path: '/api/gateway-reprobe'
+      fullPath: '/api/gateway-reprobe'
+      preLoaderRoute: typeof ApiGatewayReprobeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/files': {
       id: '/api/files'
       path: '/api/files'
@@ -2310,6 +2566,34 @@ declare module '@tanstack/react-router' {
       path: '/api/artifacts'
       fullPath: '/api/artifacts'
       preLoaderRoute: typeof ApiArtifactsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/projects': {
+      id: '/agency/projects'
+      path: '/agency/projects'
+      fullPath: '/agency/projects'
+      preLoaderRoute: typeof AgencyProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/cost': {
+      id: '/agency/cost'
+      path: '/agency/cost'
+      fullPath: '/agency/cost'
+      preLoaderRoute: typeof AgencyCostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/clients': {
+      id: '/agency/clients'
+      path: '/agency/clients'
+      fullPath: '/agency/clients'
+      preLoaderRoute: typeof AgencyClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/board': {
+      id: '/agency/board'
+      path: '/agency/board'
+      fullPath: '/agency/board'
+      preLoaderRoute: typeof AgencyBoardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/update/workspace': {
@@ -2599,6 +2883,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiArtifactsArtifactIdRouteImport
       parentRoute: typeof ApiArtifactsRoute
     }
+    '/api/agency/soul': {
+      id: '/api/agency/soul'
+      path: '/api/agency/soul'
+      fullPath: '/api/agency/soul'
+      preLoaderRoute: typeof ApiAgencySoulRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agency/projects': {
+      id: '/api/agency/projects'
+      path: '/api/agency/projects'
+      fullPath: '/api/agency/projects'
+      preLoaderRoute: typeof ApiAgencyProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agency/dashboard': {
+      id: '/api/agency/dashboard'
+      path: '/api/agency/dashboard'
+      fullPath: '/api/agency/dashboard'
+      preLoaderRoute: typeof ApiAgencyDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agency/cost': {
+      id: '/api/agency/cost'
+      path: '/api/agency/cost'
+      fullPath: '/api/agency/cost'
+      preLoaderRoute: typeof ApiAgencyCostRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agency/clients': {
+      id: '/api/agency/clients'
+      path: '/api/agency/clients'
+      fullPath: '/api/agency/clients'
+      preLoaderRoute: typeof ApiAgencyClientsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/agency/agents': {
+      id: '/api/agency/agents'
+      path: '/api/agency/agents'
+      fullPath: '/api/agency/agents'
+      preLoaderRoute: typeof ApiAgencyAgentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agency/projects/$id': {
+      id: '/agency/projects/$id'
+      path: '/$id'
+      fullPath: '/agency/projects/$id'
+      preLoaderRoute: typeof AgencyProjectsIdRouteImport
+      parentRoute: typeof AgencyProjectsRoute
+    }
+    '/agency/clients/$id': {
+      id: '/agency/clients/$id'
+      path: '/$id'
+      fullPath: '/agency/clients/$id'
+      preLoaderRoute: typeof AgencyClientsIdRouteImport
+      parentRoute: typeof AgencyClientsRoute
+    }
     '/api/sessions/$sessionKey/status': {
       id: '/api/sessions/$sessionKey/status'
       path: '/$sessionKey/status'
@@ -2627,6 +2967,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMcpNameLogsRouteImport
       parentRoute: typeof ApiMcpNameRoute
     }
+    '/api/agency/soul/$profile': {
+      id: '/api/agency/soul/$profile'
+      path: '/$profile'
+      fullPath: '/api/agency/soul/$profile'
+      preLoaderRoute: typeof ApiAgencySoulProfileRouteImport
+      parentRoute: typeof ApiAgencySoulRoute
+    }
+    '/api/agency/projects/$id': {
+      id: '/api/agency/projects/$id'
+      path: '/$id'
+      fullPath: '/api/agency/projects/$id'
+      preLoaderRoute: typeof ApiAgencyProjectsIdRouteImport
+      parentRoute: typeof ApiAgencyProjectsRoute
+    }
+    '/api/agency/clients/$id': {
+      id: '/api/agency/clients/$id'
+      path: '/$id'
+      fullPath: '/api/agency/clients/$id'
+      preLoaderRoute: typeof ApiAgencyClientsIdRouteImport
+      parentRoute: typeof ApiAgencyClientsRoute
+    }
+    '/api/agency/projects/$id/sections': {
+      id: '/api/agency/projects/$id/sections'
+      path: '/sections'
+      fullPath: '/api/agency/projects/$id/sections'
+      preLoaderRoute: typeof ApiAgencyProjectsIdSectionsRouteImport
+      parentRoute: typeof ApiAgencyProjectsIdRoute
+    }
+    '/api/agency/projects/$id/kanban-sync': {
+      id: '/api/agency/projects/$id/kanban-sync'
+      path: '/kanban-sync'
+      fullPath: '/api/agency/projects/$id/kanban-sync'
+      preLoaderRoute: typeof ApiAgencyProjectsIdKanbanSyncRouteImport
+      parentRoute: typeof ApiAgencyProjectsIdRoute
+    }
   }
 }
 
@@ -2642,6 +3017,30 @@ const SettingsRouteChildren: SettingsRouteChildren = {
 
 const SettingsRouteWithChildren = SettingsRoute._addFileChildren(
   SettingsRouteChildren,
+)
+
+interface AgencyClientsRouteChildren {
+  AgencyClientsIdRoute: typeof AgencyClientsIdRoute
+}
+
+const AgencyClientsRouteChildren: AgencyClientsRouteChildren = {
+  AgencyClientsIdRoute: AgencyClientsIdRoute,
+}
+
+const AgencyClientsRouteWithChildren = AgencyClientsRoute._addFileChildren(
+  AgencyClientsRouteChildren,
+)
+
+interface AgencyProjectsRouteChildren {
+  AgencyProjectsIdRoute: typeof AgencyProjectsIdRoute
+}
+
+const AgencyProjectsRouteChildren: AgencyProjectsRouteChildren = {
+  AgencyProjectsIdRoute: AgencyProjectsIdRoute,
+}
+
+const AgencyProjectsRouteWithChildren = AgencyProjectsRoute._addFileChildren(
+  AgencyProjectsRouteChildren,
 )
 
 interface ApiArtifactsRouteChildren {
@@ -2790,6 +3189,53 @@ const ApiSwarmMemoryRouteWithChildren = ApiSwarmMemoryRoute._addFileChildren(
   ApiSwarmMemoryRouteChildren,
 )
 
+interface ApiAgencyClientsRouteChildren {
+  ApiAgencyClientsIdRoute: typeof ApiAgencyClientsIdRoute
+}
+
+const ApiAgencyClientsRouteChildren: ApiAgencyClientsRouteChildren = {
+  ApiAgencyClientsIdRoute: ApiAgencyClientsIdRoute,
+}
+
+const ApiAgencyClientsRouteWithChildren =
+  ApiAgencyClientsRoute._addFileChildren(ApiAgencyClientsRouteChildren)
+
+interface ApiAgencyProjectsIdRouteChildren {
+  ApiAgencyProjectsIdKanbanSyncRoute: typeof ApiAgencyProjectsIdKanbanSyncRoute
+  ApiAgencyProjectsIdSectionsRoute: typeof ApiAgencyProjectsIdSectionsRoute
+}
+
+const ApiAgencyProjectsIdRouteChildren: ApiAgencyProjectsIdRouteChildren = {
+  ApiAgencyProjectsIdKanbanSyncRoute: ApiAgencyProjectsIdKanbanSyncRoute,
+  ApiAgencyProjectsIdSectionsRoute: ApiAgencyProjectsIdSectionsRoute,
+}
+
+const ApiAgencyProjectsIdRouteWithChildren =
+  ApiAgencyProjectsIdRoute._addFileChildren(ApiAgencyProjectsIdRouteChildren)
+
+interface ApiAgencyProjectsRouteChildren {
+  ApiAgencyProjectsIdRoute: typeof ApiAgencyProjectsIdRouteWithChildren
+}
+
+const ApiAgencyProjectsRouteChildren: ApiAgencyProjectsRouteChildren = {
+  ApiAgencyProjectsIdRoute: ApiAgencyProjectsIdRouteWithChildren,
+}
+
+const ApiAgencyProjectsRouteWithChildren =
+  ApiAgencyProjectsRoute._addFileChildren(ApiAgencyProjectsRouteChildren)
+
+interface ApiAgencySoulRouteChildren {
+  ApiAgencySoulProfileRoute: typeof ApiAgencySoulProfileRoute
+}
+
+const ApiAgencySoulRouteChildren: ApiAgencySoulRouteChildren = {
+  ApiAgencySoulProfileRoute: ApiAgencySoulProfileRoute,
+}
+
+const ApiAgencySoulRouteWithChildren = ApiAgencySoulRoute._addFileChildren(
+  ApiAgencySoulRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SplatRoute: SplatRoute,
@@ -2809,6 +3255,10 @@ const rootRouteChildren: RootRouteChildren = {
   Swarm2Route: Swarm2Route,
   TasksRoute: TasksRoute,
   TerminalRoute: TerminalRoute,
+  AgencyBoardRoute: AgencyBoardRoute,
+  AgencyClientsRoute: AgencyClientsRouteWithChildren,
+  AgencyCostRoute: AgencyCostRoute,
+  AgencyProjectsRoute: AgencyProjectsRouteWithChildren,
   ApiArtifactsRoute: ApiArtifactsRouteWithChildren,
   ApiAuthRoute: ApiAuthRoute,
   ApiAuthCheckRoute: ApiAuthCheckRoute,
@@ -2826,6 +3276,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiCrewStatusRoute: ApiCrewStatusRoute,
   ApiEventsRoute: ApiEventsRoute,
   ApiFilesRoute: ApiFilesRoute,
+  ApiGatewayReprobeRoute: ApiGatewayReprobeRoute,
   ApiGatewayStatusRoute: ApiGatewayStatusRoute,
   ApiHistoryRoute: ApiHistoryRoute,
   ApiIntegrationsRoute: ApiIntegrationsRoute,
@@ -2874,7 +3325,14 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTerminalStreamRoute: ApiTerminalStreamRoute,
   ApiWorkspaceRoute: ApiWorkspaceRoute,
   ChatSessionKeyRoute: ChatSessionKeyRoute,
+  AgencyIndexRoute: AgencyIndexRoute,
   ChatIndexRoute: ChatIndexRoute,
+  ApiAgencyAgentsRoute: ApiAgencyAgentsRoute,
+  ApiAgencyClientsRoute: ApiAgencyClientsRouteWithChildren,
+  ApiAgencyCostRoute: ApiAgencyCostRoute,
+  ApiAgencyDashboardRoute: ApiAgencyDashboardRoute,
+  ApiAgencyProjectsRoute: ApiAgencyProjectsRouteWithChildren,
+  ApiAgencySoulRoute: ApiAgencySoulRouteWithChildren,
   ApiClaudeProxySplatRoute: ApiClaudeProxySplatRoute,
   ApiDashboardOverviewRoute: ApiDashboardOverviewRoute,
   ApiKnowledgeConfigRoute: ApiKnowledgeConfigRoute,

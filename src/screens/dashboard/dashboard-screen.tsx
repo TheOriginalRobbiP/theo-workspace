@@ -27,6 +27,7 @@ import { OperatorTipCard } from './components/operator-tip-card'
 import { WidgetShell } from './components/widget-shell'
 import { EditModePanel } from './components/edit-mode-panel'
 import { useDashboardLayout } from './lib/use-dashboard-layout'
+import { AgencyWidget } from './components/agency-widget'
 import {
   Area,
   AreaChart,
@@ -1179,6 +1180,9 @@ export function DashboardScreen() {
               onOpen={() => navigate({ to: '/skills' })}
             />
           </WidgetShell>
+          {/* Agency stats widget */}
+          <AgencyWidget />
+
           {/* `flex-1` here pushes the rhythm card to consume any
               remaining vertical space so the rail's bottom aligns
               with Sessions Intelligence. The card itself uses

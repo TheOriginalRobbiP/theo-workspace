@@ -587,6 +587,7 @@ function ChatSidebarComponent({
   const isConductorActive = pathname === '/conductor'
   const isOperationsActive = pathname === '/operations'
   const isSwarmActive = pathname === '/swarm' || pathname === '/swarm2'
+  const isAgencyActive = pathname.startsWith('/agency')
   const mainRoutes = ['/chat', '/new', '/files', '/terminal']
   const knowledgeRoutes = ['/memory', '/skills']
   const systemRoutes = ['/settings', '/logs']
@@ -835,7 +836,7 @@ function ChatSidebarComponent({
       kind: 'link',
       to: '/operations',
       icon: UserMultipleIcon,
-      label: 'Operations',
+      label: 'Agents',
       active: isOperationsActive,
     },
     {
@@ -844,6 +845,13 @@ function ChatSidebarComponent({
       icon: UserGroupIcon,
       label: 'Swarm',
       active: isSwarmActive,
+    },
+    {
+      kind: 'link',
+      to: '/agency/',
+      icon: Building01Icon,
+      label: 'Agency',
+      active: isAgencyActive,
     },
 
   ]

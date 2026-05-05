@@ -459,6 +459,17 @@ const config = defineConfig(({ mode, command }) => {
         'better-sqlite3',
       ],
     },
+    build: {
+      rollupOptions: {
+        external: [
+          'better-sqlite3',
+          'playwright',
+          'playwright-core',
+          'playwright-extra',
+          'puppeteer-extra-plugin-stealth',
+        ],
+      },
+    },
     optimizeDeps: {
       exclude: [
         'playwright',

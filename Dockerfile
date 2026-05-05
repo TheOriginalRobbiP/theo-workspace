@@ -34,7 +34,7 @@ FROM node:22-slim
 RUN corepack enable && apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates curl tini python3 make g++ \
     && rm -rf /var/lib/apt/lists/* \
-    && groupadd -r workspace && useradd -r -g workspace -u 10010 workspace
+    && groupadd -r workspace && useradd -r -g workspace -u 10000 workspace
 
 WORKDIR /app
 

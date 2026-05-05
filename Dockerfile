@@ -28,26 +28,29 @@ RUN pnpm build
 
 # ─── runtime stage ────────────────────────────────────────────────────────
 FROM node:22-slim
-# python3 is required by scripts/pty-helper.py (terminal feature). Originally
-# added in PR #185 for issue #161; regressed by the 2026-05-01 rename commit
-# efcb7d14 and re-added here per issue #259.
-RUN apt-get update && apt-get install -y --no-install-recommends \
-      ca-certificates curl tini python3 \
+# python3 is required by scripts/pty-helper.py (terminal feature).
+# python3 + make + g++ are required to rebuild better-sqlite3 native binding
+# in the runtime stage (pnpm symlink store doesn't survive multi-stage copy cleanly).
+RUN corepack enable && apt-get update && apt-get install -y --no-install-recommends \
+      ca-certificates curl tini python3 make g++ \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd -r workspace && useradd -r -g workspace -u 10010 workspace
 
 WORKDIR /app
 
 # Copy build artefacts + runtime deps.
-# server-entry.js is the Node HTTP server that wraps the TanStack Start fetch
-# handler exported by dist/server/server.js. Without it, `node dist/server/server.js`
-# imports the handler module, runs top-level code, and exits (code 0) because
-# nothing keeps the event loop alive — see issue #129.
 COPY --from=build --chown=workspace:workspace /app/dist ./dist
 COPY --from=build --chown=workspace:workspace /app/node_modules ./node_modules
 COPY --from=build --chown=workspace:workspace /app/package.json ./package.json
+COPY --from=build --chown=workspace:workspace /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=build --chown=workspace:workspace /app/server-entry.js ./server-entry.js
 COPY --from=build --chown=workspace:workspace /app/skills ./skills
+
+# Rebuild better-sqlite3 native binding for the runtime environment.
+# pnpm's virtual store symlinks don't survive multi-stage COPY cleanly,
+# so we install only better-sqlite3 fresh to get the correct .node binary.
+RUN pnpm add better-sqlite3 --config.unsafe-perm=true && \
+    chown -R workspace:workspace /app/node_modules/better-sqlite3
 
 USER workspace
 ENV NODE_ENV=production \

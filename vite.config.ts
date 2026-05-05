@@ -458,16 +458,18 @@ const config = defineConfig(({ mode, command }) => {
         'puppeteer-extra-plugin-stealth',
         'better-sqlite3',
       ],
+      // Do NOT add better-sqlite3 to noExternal — keep it as a real
+      // node_modules import so Node can load the native .node binding at runtime.
     },
     build: {
       rollupOptions: {
-        external: [
-          'better-sqlite3',
-          'playwright',
-          'playwright-core',
-          'playwright-extra',
-          'puppeteer-extra-plugin-stealth',
-        ],
+        external: (id) => {
+          // Externalize native modules and large optional deps.
+          // Use a function so we can match by prefix (handles subpath imports).
+          if (id === 'better-sqlite3' || id.startsWith('better-sqlite3/')) return true
+          if (['playwright', 'playwright-core', 'playwright-extra', 'puppeteer-extra-plugin-stealth'].includes(id)) return true
+          return false
+        },
       },
     },
     optimizeDeps: {
